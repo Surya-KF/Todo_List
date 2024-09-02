@@ -4,6 +4,8 @@
     --secondary-color:#4A4D57;
     --accent-color: #ff006f;
     --text-color: #F9F9F9;
+    --todo-text-color: #F9F9F9;
+    --todo-text-color-checked: #808080;
 }
 *{
     margin: 0;
@@ -17,19 +19,52 @@ html{
 body{
     min-height: 100vh;
     padding: 10px;
+    padding-top: 120px;
     background-color: var(--background);
     display: flex;
     flex-direction: column;
     align-items: center;
 }
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--background);
+    padding: 20px;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 h1{
-   margin-top: 100px;
-   margin-bottom: 20px; 
    font-size: 3rem;
    font-weight: 800;
    text-transform: uppercase;
    text-align: center;
    color: var(--accent-color);
+}
+.theme-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.theme-button {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+.color-select {
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    border: 1px solid var(--secondary-color);
+    padding: 5px;
+    border-radius: 5px;
+}
+.color-select:hover{
+    
 }
 .wrapper{
     width: 700px;
@@ -80,7 +115,7 @@ form{
     padding-right: 0;
     flex-grow: 1;
     transition: 200ms ease;
-
+    color: var(--todo-text-color);
 }
 .delete-button{
     padding: 3px;
@@ -92,7 +127,8 @@ form{
     cursor: pointer;
 }
 .delete-button svg{
-    transition: 200ms  ease;
+    transition: 200ms ease;
+    fill: var(--secondary-color);
 }
 .delete-button:hover svg{
     fill: #ff0033;
@@ -117,10 +153,18 @@ input[type="checkbox"]:checked ~ .custom-checkbox svg{
 }
 input[type="checkbox"]:checked ~ .todo-text{
     text-decoration: line-through;
-    color: var(--secondary-color);
+    color: var(--todo-text-color-checked);
 }
 input[type="checkbox"]{
     display:none;
+}
+body.light-theme {
+    --background: #f0f0f0;
+    --primary-color: #ffffff;
+    --secondary-color: #d0d0d0;
+    --text-color: #333333;
+    --todo-text-color: #333333;
+    --todo-text-color-checked: #808080;
 }
 @media(max-width: 500px){
     html{
@@ -134,7 +178,6 @@ input[type="checkbox"]{
         height: auto;
     }
     h1{
-        margin-top: 50px;
         font-size:15vw;
     }
 }
