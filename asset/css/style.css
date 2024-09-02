@@ -63,9 +63,6 @@ h1{
     padding: 5px;
     border-radius: 5px;
 }
-.color-select:hover{
-    
-}
 .wrapper{
     width: 700px;
     max-width: 100%;
@@ -170,6 +167,9 @@ body.light-theme {
     html{
         font-size: 12pt;
     }
+    .wrapper{
+        margin-top: 1.5rem;
+    }
     #add-button{
         position: unset;
         width: 100%;
@@ -178,7 +178,7 @@ body.light-theme {
         height: auto;
     }
     h1{
-        font-size:15vw;
+        font-size:5rch;
     }
 }
 
