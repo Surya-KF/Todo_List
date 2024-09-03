@@ -163,6 +163,38 @@ body.light-theme {
     --todo-text-color: #333333;
     --todo-text-color-checked: #808080;
 }
+.todo-controls {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+#todo-date, #todo-time {
+    padding: 5px;
+    border: 1px solid var(--secondary-color);
+    border-radius: 5px;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+}
+#select-all-button, #delete-all-button {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--accent-color);
+    color: var(--background);
+    cursor: pointer;
+}
+#select-all-button:hover, #delete-all-button:hover {
+    opacity: 0.8;
+}
+.date-section {
+    margin-top: 20px;
+    border-top: 1px solid var(--secondary-color);
+    padding-top: 10px;
+}
+.date-section h2 {
+    color: var(--accent-color);
+    margin-bottom: 10px;
+}
 @media(max-width: 500px){
     html{
         font-size: 12pt;
@@ -180,5 +212,11 @@ body.light-theme {
     h1{
         font-size:5rch;
     }
+    .todo-controls {
+        flex-wrap: wrap;
+    }
+    #todo-date, #todo-time, #select-all-button, #delete-all-button {
+        flex: 1 0 40%;
+        margin-bottom: 5px;
+    }
 }
-

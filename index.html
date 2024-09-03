@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Todo App</title>
+    <title>TODO APP</title>
     <link rel="stylesheet" href="asset/css/style.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <header>
@@ -16,22 +16,28 @@
             </button>
             <select id="color-theme" class="color-select">
                 <option value="#ff006f">Pink</option>
-                <option value="#00ff9f">Green</option>
-                <option value="#00a8ff">Blue</option>
-                <option value="#ffa500">Orange</option>
-                <option value="rgb(0,225,255)">Cyan</option>
-                <option value="#5abfa1">Baby Green</option>
-                <option value="#800080">Purple</option>
-                <option value="#ff7722">Saffron</option>
+                <option value="#4CAF50">Green</option>
+                <option value="#2196F3">Blue</option>
+                <option value="#FF9800">Orange</option>
+                <option value="#00BCD4">Cyan</option>
+                <option value="#98FB98">Baby Green</option>
+                <option value="#9C27B0">Purple</option>
+                <option value="#F4C430">Saffron</option>
             </select>
         </div>
     </header>
     <div class="wrapper">
+        <div class="todo-controls">
+            <input type="date" id="todo-date" name="todo-date">
+            <input type="time" id="todo-time" name="todo-time">
+            <button id="select-all-button">Select All</button>
+            <button id="delete-all-button">Delete All</button>
+        </div>
         <form>
-            <input type="text" id="todo-input" placeholder="Write anything and hit enter to add">
-            <button id="add-button">ADD</button>
+            <input type="text" id="todo-input" placeholder="Add a new task...">
+            <button id="add-button" type="submit">ADD</button>
         </form>
-        <ul id="todo-list"></ul>
+        <div id="todo-lists"></div>
     </div>
     <script src="asset/script/script.js"></script>
 </body>

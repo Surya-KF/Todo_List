@@ -1,8 +1,12 @@
 const todoForm = document.querySelector('form');
 const todoInput = document.getElementById('todo-input');
-const todoListUL = document.getElementById('todo-list');
+const todoDateInput = document.getElementById('todo-date');
+const todoTimeInput = document.getElementById('todo-time');
+const todoListsDiv = document.getElementById('todo-lists');
 const themeToggle = document.getElementById('theme-toggle');
 const colorThemeSelect = document.getElementById('color-theme');
+const selectAllButton = document.getElementById('select-all-button');
+const deleteAllButton = document.getElementById('delete-all-button');
 
 let allTodos = getTodos();
 updateTodoList();
@@ -14,13 +18,19 @@ todoForm.addEventListener('submit', function(e) {
 
 themeToggle.addEventListener('click', toggleTheme);
 colorThemeSelect.addEventListener('change', changeColorTheme);
+selectAllButton.addEventListener('click', selectAllTodos);
+deleteAllButton.addEventListener('click', deleteAllTodos);
 
 function addTodo() {
     const todoText = todoInput.value.trim();
+    const todoDate = todoDateInput.value || new Date().toISOString().split('T')[0];
+    const todoTime = todoTimeInput.value || new Date().toTimeString().split(' ')[0].slice(0, 5);
     if (todoText.length > 0) {
         const todoObject = {
             text: todoText,
-            completed: false
+            completed: false,
+            date: todoDate,
+            time: todoTime
         }
         allTodos.push(todoObject);
         updateTodoList();
@@ -30,17 +40,30 @@ function addTodo() {
 }
 
 function updateTodoList() {
-    todoListUL.innerHTML = "";
-    allTodos.forEach((todo, todoIndex) => {
-        todoItem = createTodoItem(todo, todoIndex);
-        todoListUL.append(todoItem);
-    });
+    todoListsDiv.innerHTML = "";
+    const groupedTodos = groupTodosByDate(allTodos);
+    
+    for (const [date, todos] of Object.entries(groupedTodos)) {
+        const dateSection = document.createElement('div');
+        dateSection.className = 'date-section';
+        dateSection.innerHTML = `<h2>${formatDate(date)}</h2>`;
+        
+        const todoListUL = document.createElement('ul');
+        todos.forEach((todo, todoIndex) => {
+            const todoItem = createTodoItem(todo, todoIndex);
+            todoListUL.appendChild(todoItem);
+        });
+        
+        dateSection.appendChild(todoListUL);
+        todoListsDiv.appendChild(dateSection);
+    }
 }
 
 function createTodoItem(todo, todoIndex) {
     const todoId = "todo-"+todoIndex;
     const todoLI = document.createElement("li");
     const todoText = todo.text;
+    const todoTime = todo.time ? ` (${todo.time})` : '';
     todoLI.className = "todo";
     todoLI.innerHTML = `<input type="checkbox" id="${todoId}">
                 <label class="custom-checkbox" for="${todoId}">
@@ -48,7 +71,7 @@ function createTodoItem(todo, todoIndex) {
                         <path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/></svg>
                 </label>
                 <label for="${todoId}" class="todo-text">
-                ${todoText}
+                ${todoText}${todoTime}
                 </label>
                 <button class="delete-button">
                     <svg fill="var(--secondary-color)" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
@@ -97,4 +120,34 @@ function toggleTheme() {
 function changeColorTheme(e) {
     const color = e.target.value;
     document.documentElement.style.setProperty('--accent-color', color);
+}
+
+function selectAllTodos() {
+    allTodos = allTodos.map(todo => ({...todo, completed: true}));
+    saveTodos();
+    updateTodoList();
+}
+
+function deleteAllTodos() {
+    if (confirm("Are you sure you want to delete all todos?")) {
+        allTodos = [];
+        saveTodos();
+        updateTodoList();
+    }
+}
+
+function groupTodosByDate(todos) {
+    return todos.reduce((groups, todo) => {
+        const date = todo.date;
+        if (!groups[date]) {
+            groups[date] = [];
+        }
+        groups[date].push(todo);
+        return groups;
+    }, {});
+}
+
+function formatDate(dateString) {
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString(undefined, options);
 }
